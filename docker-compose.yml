@@ -1,0 +1,39 @@
+version: '3.8'
+
+# ── LOCALHOST / TESTOVANIE ──────────────────────────────────
+# Spustenie: docker compose up -d
+# Stop:      docker compose down
+# Logy:      docker compose logs -f
+
+services:
+  backend:
+    build: ./backend
+    container_name: storms_backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=localhost_dev_secret_key_storms_2025
+    volumes:
+      # DB priamo v ./backend/ — rovnaké miesto ako doteraz
+      - ./backend/storms.db:/usr/src/app/storms.db
+    networks:
+      - storms_net
+
+  frontend:
+    image: nginx:alpine
+    container_name: storms_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - storms_net
+
+networks:
+  storms_net:
+    driver: bridge
