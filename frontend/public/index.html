@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STORMS – Krby & Pece</title>
+    <link rel="icon" href="data:image/png;base64,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">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=2.7">
+    <script>
+        // Okamžite aplikovať dark mode pred prvým renderom — zabráni blikaniu
+        (function() {
+            try {
+                // Nájdi settings pre akéhokoľvek prihláseného usera
+                for (var i = 0; i < localStorage.length; i++) {
+                    var k = localStorage.key(i);
+                    if (k && k.startsWith('app_settings_')) {
+                        var s = JSON.parse(localStorage.getItem(k) || '{}');
+                        if (s.dark_mode) {
+                            document.documentElement.classList.add('dark-pre');
+                            document.addEventListener('DOMContentLoaded', function() {
+                                document.body.classList.add('dark');
+                                // Logo swap
+                                document.querySelectorAll('img.hdr-logo-img, img.login-logo-img').forEach(function(img) {
+                                    img.src = 'images2.png';
+                                });
+                            });
+                        }
+                        break;
+                    }
+                }
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+
+<!-- SPLASH LOADER -->
+<div id="splashScreen" style="position:fixed;inset:0;background:#F7F4EE;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .25s ease">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;border-radius:50%;border:3px solid #E9E3D6;border-top-color:#C4621F;animation:splashSpin .7s linear infinite"></div>
+    </div>
+</div>
+
+<!-- LOGIN — skrytý pokiaľ nie je potrebný -->
+<div id="loginScreen" style="display:none">
+    <div class="login-card" id="loginStep1">
+        <div class="login-logo" style="margin-bottom: 24px; text-align: center;">
+            <img src="images.png" alt="Storms logo" class="login-logo-img" style="max-height: 80px; margin-bottom: 12px;">
+            <div class="login-logo-sub" style="color: var(--muted); font-size: 15px; text-transform: uppercase; letter-spacing: 1px;">Obchodný systém</div>
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 16px;">
+            <label class="form-label" style="font-size: 12px; font-weight: bold; color: var(--muted);">Prihlasovacie meno</label>
+            <input type="text" id="loginUsername" class="form-control" placeholder="Napr. admin" autofocus autocomplete="username" spellcheck="false" autocorrect="off">
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 28px;">
+            <label class="form-label" style="font-size: 12px; font-weight: bold; color: var(--muted);">Heslo</label>
+            <div style="position:relative">
+                <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" autocomplete="current-password" style="padding-right:44px">
+                <button type="button" id="togglePassword" onclick="toggleLoginPassword()" tabindex="-1"
+                        style="position:absolute;right:0;top:0;height:100%;width:42px;background:none;border:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0;transition:color .15s"
+                        onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'"
+                        title="Zobraziť/skryť heslo">
+                    <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <button class="login-btn" id="loginBtnStep1">Pokračovať <span style="margin-left:8px;">&rarr;</span></button>
+        <div class="login-error" id="loginError1" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="login-card d-none" id="loginStep2">
+        <div class="login-logo" style="margin-bottom: 20px; text-align: center;">
+            <img src="images.png" alt="Storms logo" class="login-logo-img" style="max-height: 50px; margin-bottom: 12px;">
+            <div class="login-logo-sub" style="color: var(--red); font-size: 1.2rem; font-weight: 700;">Dvojfaktorové overenie</div>
+        </div>
+        <div id="setup2faBox" class="d-none" style="margin-bottom: 20px; text-align: center;">
+            <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px; line-height: 1.5;">Váš účet je nový. Naskenujte QR kód v aplikácii <b>Google Authenticator</b> alebo inej TOTP aplikácii.</p>
+            <img id="qrImage" src="" alt="QR Code" style="max-width: 160px; border: 1px solid var(--border); border-radius: 8px; padding: 5px; background: white; margin: 0 auto; display: block;">
+        </div>
+        <div id="verify2faBox" style="margin-bottom: 15px; text-align: center;">
+            <p style="font-size: 13px; color: var(--muted);">Zadajte 6-miestny kód z autentifikačnej aplikácie.</p>
+        </div>
+        <div class="form-group" style="margin-bottom: 16px;">
+            <input type="text" id="loginTotp" class="form-control" placeholder="123 456" maxlength="7" style="text-align: center; font-size: 2rem; letter-spacing: 8px; font-weight: bold; color: var(--red);" autocomplete="off" spellcheck="false" autocorrect="off">
+        </div>
+        <label for="rememberMe" class="remember-toggle">
+            <input type="checkbox" id="rememberMe">
+            <span class="remember-toggle-box">
+        <svg class="remember-check-icon" viewBox="0 0 12 10" fill="none">
+          <polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+            <span class="remember-toggle-text">Zapamätať toto zariadenie na 5 dní</span>
+        </label>
+        <button class="login-btn" id="loginBtnStep2" style="background: var(--red);">Overiť a vstúpiť</button>
+        <button class="btn btn-secondary" id="btnBackToLogin" style="width: 100%; margin-top: 12px;">&larr; Späť na heslo</button>
+        <div class="login-error" id="loginError2" style="margin-top: 15px;"></div>
+    </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="appShell">
+
+    <!-- ═══════════════════════════════════════════
+         TOPBAR — clean professional header
+         ═══════════════════════════════════ -->
+    <header class="hdr">
+
+        <!-- BRAND — logo väčšie vľavo -->
+        <a class="hdr-brand" href="#" tabindex="-1" onclick="event.preventDefault();if(typeof showTab==='function')showTab('dashboard')">
+            <img src="images.png" alt="Storms" class="hdr-logo-img">
+            <div class="hdr-brand-text">
+                <span class="hdr-brand-name">Storms</span>
+                <span class="hdr-brand-sub">Obchodný systém</span>
+            </div>
+        </a>
+
+        <!-- NAVIGÁCIA — vycentrovaná v strede -->
+        <nav class="hdr-nav" id="mainNav">
+            <div class="nav-tab" data-tab="dashboard" onclick="showTab('dashboard')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                Dashboard
+            </div>
+            <div class="nav-tab" data-tab="zakazky" onclick="showTab('zakazky')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Zákazky
+            </div>
+            <div class="nav-tab" data-tab="servis" onclick="showTab('servis')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                Servis
+            </div>
+            <div class="nav-tab d-none" data-tab="users" id="navUsers" onclick="showTab('users')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Používatelia
+            </div>
+        </nav>
+
+        <!-- RIGHT SIDE -->
+        <div class="hdr-right">
+
+            <!-- Hodiny -->
+            <div class="hdr-clock" id="hdrClock">
+                <div class="hdr-clock-time" id="hdrClockTime">--:--</div>
+                <div class="hdr-clock-date" id="hdrClockDate">...</div>
+            </div>
+
+            <!-- Oddelovač -->
+            <div class="hdr-sep"></div>
+
+            <!-- Nastavenia button (len owner) -->
+            <button class="hdr-settings-btn d-none" id="hdrSettingsBtn" onclick="toggleSettingsPanel()" title="Nastavenia">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+            </button>
+
+            <!-- Avatar s dropdown -->
+            <div class="hdr-user-wrap" id="hdrUserWrap">
+                <div class="hdr-user" id="navProfil" onclick="toggleUserDropdown()" title="Môj profil">
+                    <div class="hdr-avatar">
+                        <span id="topbarAvatarLetter">—</span>
+                    </div>
+                    <div class="hdr-user-info">
+                        <div class="hdr-user-name" id="topbarUsername">—</div>
+                        <div class="hdr-user-role">
+                            <span id="topbarRole">—</span><span class="topbar-store-sep d-none" id="topbarStoreSep"> · </span><span class="topbar-store-name d-none" id="topbarStoreName"></span>
+                        </div>
+                    </div>
+                    <svg class="hdr-chevron" id="hdrChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
+                </div>
+
+                <!-- Dropdown menu -->
+                <div class="hdr-dropdown" id="hdrDropdown">
+                    <div class="hdr-dropdown-header">
+                        <div class="hdr-dropdown-avatar" id="hdrDropAvatar">—</div>
+                        <div>
+                            <div class="hdr-dropdown-name" id="hdrDropName">—</div>
+                            <div class="hdr-dropdown-role" id="hdrDropRole">—</div>
+                        </div>
+                    </div>
+                    <div class="hdr-dropdown-divider"></div>
+                    <button class="hdr-dropdown-item" onclick="closeUserDropdown();showTab('profil')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Môj profil
+                    </button>
+                    <div class="hdr-dropdown-divider"></div>
+                    <button class="hdr-dropdown-item hdr-dropdown-item-danger" id="btnLogout">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Odhlásiť sa
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hamburger (mobile) -->
+            <button class="topbar-hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+    </header>
+
+    <!-- Mobile drawer -->
+    <div class="nav-mobile-overlay" id="navMobileOverlay" onclick="closeMobileNav()"></div>
+    <nav class="nav-mobile" id="navMobile">
+        <div class="nav-tab" data-tab="dashboard" onclick="showTab('dashboard')">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+        </div>
+        <div class="nav-tab" data-tab="zakazky" onclick="showTab('zakazky')">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+            Zákazky
+        </div>
+        <div class="nav-tab" data-tab="servis" onclick="showTab('servis')">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Servis
+        </div>
+        <div class="nav-tab d-none" data-tab="users" id="navUsersMobile" onclick="showTab('users')">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Používatelia
+        </div>
+        <div class="nav-tab" data-tab="profil" id="navProfilMobile" onclick="showTab('profil')">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Môj profil
+        </div>
+    </nav>
+
+    <main class="main" id="mainContent">
+        <div id="view-dashboard"></div>
+        <div id="view-zakazky" class="d-none"></div>
+        <div id="view-servis" class="d-none"></div>
+        <div id="view-profil" class="d-none"></div>
+
+        <div id="view-users" class="d-none">
+            <div class="users-page-wrap">
+                <div class="toolbar-v2">
+                    <div class="toolbar-v2-top">
+                        <div class="toolbar-v2-title">Správa používateľov</div>
+                        <div class="toolbar-v2-actions">
+                            <button class="btn btn-primary" onclick="openNewUserModal()">+ Nový používateľ</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="users-table-wrap">
+                    <table class="users-table">
+                        <thead>
+                        <tr>
+                            <th>Používateľ</th>
+                            <th>Rola</th>
+                            <th>Pobočka</th>
+                            <th>2FA</th>
+                            <th>Vytvorený</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="usersTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer" id="appFooter">
+        <div class="app-footer-beta">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Web aplikácia je v testovacej prevádzke. Pri akýchkoľvek problémoch alebo chybách nás kontaktujte na
+            <a href="mailto:herstekmatej@gmail.com">herstekmatej@gmail.com</a>
+        </div>
+        <div class="app-footer-inner">
+            <div class="app-footer-brand">
+                <img src="images2.png" alt="Storms" class="app-footer-logo">
+                <span class="app-footer-name">STORMS</span>
+                <span class="app-footer-sep"></span>
+                <span class="app-footer-copy">Obchodný systém &copy; <span id="footerYear">2025</span></span>
+            </div>
+            <nav class="app-footer-nav">
+                <button class="app-footer-link" onclick="showTab('dashboard')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                    Dashboard
+                </button>
+                <button class="app-footer-link" onclick="showTab('zakazky')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                    Zákazky
+                </button>
+                <button class="app-footer-link" onclick="showTab('servis')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    Servis
+                </button>
+                <button class="app-footer-link" onclick="showTab('profil')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Profil
+                </button>
+                <button class="app-footer-link" id="footerUsersBtn" style="display:none" onclick="showTab('users')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Používatelia
+                </button>
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+<!-- MODAL PROFILY -->
+<div id="modalUser" class="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Vytvoriť používateľa</h3>
+            <button class="modal-close" data-close="modalUser"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-section">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Prihlasovacie meno <span class="req">*</span></label>
+                        <input type="text" id="newUsername" class="form-control" placeholder="Napr. jozo_ke" autocomplete="off" spellcheck="false" spellcheck="false" autocorrect="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Heslo <span class="req">*</span></label>
+                        <div style="position:relative">
+                            <input type="password" id="newUserPassword" class="form-control" placeholder="Min. 6 znakov" autocomplete="new-password" style="padding-right:42px">
+                            <button type="button" onclick="togglePwVisibility('newUserPassword',this)" tabindex="-1"
+                                    style="position:absolute;right:0;top:0;height:100%;width:40px;background:none;border:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0;transition:color .15s"
+                                    onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'" title="Zobraziť/skryť heslo">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Rola používateľa <span class="req">*</span></label>
+                        <select id="newUserRole" class="form-control" onchange="toggleStoreCheckboxes()">
+                            <option value="">— Vyberte rolu —</option>
+                            <option value="owner">Konateľ / Management</option>
+                            <option value="admin">Admin / Správca</option>
+                            <option value="store">Pobočka</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="storeCheckboxes" class="form-section d-none">
+                <div class="form-section-title">Priradené pobočky</div>
+                <div class="store-cb-grid">
+                    <label class="store-cb-tile"><input type="checkbox" class="store-cb" value="Obchod KE"><span class="store-cb-tile-inner"><span class="store-cb-tile-check"></span><span class="store-cb-tile-name">Obchod KE</span></span></label>
+                    <label class="store-cb-tile"><input type="checkbox" class="store-cb" value="Obchod SL"><span class="store-cb-tile-inner"><span class="store-cb-tile-check"></span><span class="store-cb-tile-name">Obchod SL</span></span></label>
+                    <label class="store-cb-tile"><input type="checkbox" class="store-cb" value="Obchod BA"><span class="store-cb-tile-inner"><span class="store-cb-tile-check"></span><span class="store-cb-tile-name">Obchod BA</span></span></label>
+                    <label class="store-cb-tile"><input type="checkbox" class="store-cb" value="Obchod CZ"><span class="store-cb-tile-inner"><span class="store-cb-tile-check"></span><span class="store-cb-tile-name">Obchod CZ</span></span></label>
+                    <label class="store-cb-tile"><input type="checkbox" class="store-cb" value="V.O."><span class="store-cb-tile-inner"><span class="store-cb-tile-check"></span><span class="store-cb-tile-name">V.O.</span></span></label>
+                </div>
+            </div>
+            <div id="userError" class="form-error-msg d-none"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="modalUser">Zrušiť</button>
+            <button class="btn btn-primary" onclick="saveNewUser()">Vytvoriť konto</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL MÉDIÁ — galéria + prílohy -->
+<div class="modal-overlay" id="modalMedia">
+    <div class="modal modal-media">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalMediaTitle">Fotogaléria</h3>
+            <button class="modal-close" data-close="modalMedia"></button>
+        </div>
+        <div class="modal-body" style="padding:0">
+            <div id="mm_panel_fotky" class="mm-panel">
+                <div id="mm_fotky_gallery" class="media-gallery media-gallery-lg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;z-index:99999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;flex-direction:column">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-prev" onclick="event.stopPropagation();lightboxNav(-1)">&#8249;</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-next" onclick="event.stopPropagation();lightboxNav(1)">&#8250;</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- MODAL ZÁKAZKA -->
+<div class="modal-overlay" id="modalZakazka">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-header-icon"></div>
+            <h3 id="modalZakazkaTitle">Nová zákazka</h3>
+            <button class="modal-close" data-close="modalZakazka"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-section">
+                <div class="form-section-title">Základné informácie</div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Dátum dopytu</label><input type="date" id="z_dopyt" class="form-control"></div>
+                    <div class="form-group"><label class="form-label">Dátum obhliadky</label><input type="date" id="z_obhliadka" class="form-control"></div>
+                    <div class="form-group"><label class="form-label">Dátum ponuky</label><input type="date" id="z_ponuka_d" class="form-control"></div>
+                    <div class="form-group"><label class="form-label">Dátum objednávky / zmluvy</label><input type="date" id="z_objednavka" class="form-control"></div>
+                    <div class="form-group"><label class="form-label">Zákazník <span class="req">*</span></label><input type="text" id="z_zakaznik" class="form-control" placeholder="Meno zákazníka" spellcheck="false" autocorrect="off"></div>
+                    <div class="form-group"><label class="form-label">Typ zákazníka</label><select id="z_typ_zak" class="form-control"><option value="">— vyber —</option><option>FO</option><option>Firma</option><option>Developer</option><option>Architekt</option></select></div>
+                    <div class="form-group"><label class="form-label">Lokalita</label><input type="text" id="z_lokalita" class="form-control" placeholder="Mesto / obec" spellcheck="false" autocorrect="off"></div>
+                    <div class="form-group"><label class="form-label">Stav zákazky <span class="req">*</span></label><select id="z_stav" class="form-control"><option value="">— vyber —</option><option>Dopyt</option><option>Obhliadka</option><option>Ponuka</option><option>Objednané</option><option>Realizované</option><option>Storno</option></select></div>
+                    <div class="form-group"><label class="form-label">Zdroj leadu</label><select id="z_zdroj" class="form-control"><option value="">— vyber —</option><option>Web</option><option>Showroom</option><option>Telefón</option><option>Odporúčanie</option><option>Developer</option><option>Reklama</option><option>Architekt</option></select></div>
+                    <div class="form-group"><label class="form-label">Výsledok obhliadky</label><select id="z_vysledok" class="form-control"><option value="">— vyber —</option><option>ponuka</option><option>nezáujem</option><option>rieši konkurencia</option><option>odložené</option></select></div>
+                    <div class="form-group d-none" id="z_obchod_group"><label class="form-label">Obchod (admin)</label><select id="z_obchod" class="form-control"><option value="">— vyber —</option><option>Obchod KE</option><option>Obchod SL</option><option>Obchod BA</option><option>Obchod CZ</option><option>V.O.</option></select></div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title">Produkt</div>
+                <div class="form-grid">
+                    <div class="form-group"><label class="form-label">Typ produktu</label><select id="z_typ_prod" class="form-control"><option value="">— vyber —</option><option>Krb</option><option>Pec</option><option>Krbová vložka</option><option>Biokrb</option><option>Elektrický krb</option></select></div>
+                    <div class="form-group"><label class="form-label">Typ riešenia</label><select id="z_typ_riesenia" class="form-control"><option value="">— vyber —</option><option>Iba materiál</option><option>Komín</option><option>Komín + krb + montáž</option><option>Krb + montáž</option></select></div>
+                    <div class="form-group span-2"><label class="form-label">Model / Značka</label><input type="text" id="z_model" class="form-control" placeholder="Model alebo značka výrobku" spellcheck="false" autocorrect="off"></div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title">Financie (€)</div>
+                <div class="form-grid cols-3">
+                    <div class="form-group"><label class="form-label">Cena krb/pec (predaj)</label><input type="number" id="z_cena_krb" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label class="form-label">Nákup krb/pec</label><input type="number" id="z_nakup_krb" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div></div>
+                    <div class="form-group"><label class="form-label">Cena komín (predaj)</label><input type="number" id="z_cena_komin" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label class="form-label">Nákup komín</label><input type="number" id="z_nakup_komin" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div></div>
+                    <div class="form-group"><label class="form-label">Cena montáž (predaj)</label><input type="number" id="z_cena_montaz" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label class="form-label">Náklad montáž</label><input type="number" id="z_naklad_montaz" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div></div>
+                    <div class="form-group"><label class="form-label">Cena príslušenstvo (predaj)</label><input type="number" id="z_cena_prislus" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label class="form-label">Nákup príslušenstvo</label><input type="number" id="z_nakup_prislus" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div></div>
+                    <div class="form-group"><label class="form-label">Doprava fakturovaná</label><input type="number" id="z_doprava_fakt" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label class="form-label">Náklad doprava</label><input type="number" id="z_naklad_doprava" class="form-control zfin" placeholder="0" min="0" step="0.01"></div>
+                    <div class="form-group"><label class="form-label">Zľava %</label><input type="number" id="z_zlava" class="form-control" placeholder="0" min="0" max="100" step="0.1" spellcheck="false"></div>
+                </div>
+                <div class="finance-calc">
+                    <div><div class="finance-calc-label">Tržba spolu</div><div class="finance-calc-value trzba" id="calc_trzba">0 €</div></div>
+                    <div><div class="finance-calc-label">Náklady spolu</div><div class="finance-calc-value naklady" id="calc_naklady">0 €</div></div>
+                    <div><div class="finance-calc-label">Marža €</div><div class="finance-calc-value marza" id="calc_marza">0 €</div></div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title">Poznámka</div>
+                <textarea id="z_poznamka" class="form-control" rows="3" placeholder="Voliteľná poznámka..." spellcheck="false"></textarea>
+            </div>
+            <div class="form-section media-section" id="zakazkaFotkySection" style="display:none; margin-top:20px;">
+                <div class="form-section-title" style="display:flex;justify-content:space-between;align-items:center;">
+                    Fotogaléria <span class="media-tab-count" id="z_fotky_count" style="color:var(--muted2);font-weight:500"></span>
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <input type="file" id="z_fotky_upload" accept="image/*" multiple style="display:none;" onchange="handleFileUpload(this, State.editingZakazkaId||State.newZakazkaTemp, 'zakazka', 'fotky')">
+                        <button class="btn btn-secondary btn-sm" onclick="$('z_fotky_upload').click()">+ Pridať fotky</button>
+                    </div>
+                </div>
+                <div id="z_fotky_gallery" class="media-gallery" style="margin-top:10px"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="modalZakazka">Zrušiť</button>
+            <button class="btn btn-primary" id="btnSaveZakazka">Uložiť zákazku</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL SERVIS -->
+<div class="modal-overlay" id="modalServis">
+    <div class="modal md">
+        <div class="modal-header">
+            <div class="modal-header-icon"></div>
+            <h3 id="modalServisTitle">Nový servisný zásah</h3>
+            <button class="modal-close" data-close="modalServis"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-grid">
+                <div class="form-group"><label class="form-label">Dátum <span class="req">*</span></label><input type="date" id="s_datum" class="form-control"></div>
+                <div class="form-group"><label class="form-label">Technik</label><input type="text" id="s_technik" class="form-control" placeholder="Meno technika" spellcheck="false" autocorrect="off"></div>
+                <div class="form-group span-2"><label class="form-label">Zákazník <span class="req">*</span></label><input type="text" id="s_zakaznik" class="form-control" placeholder="Meno zákazníka" spellcheck="false" autocorrect="off"></div>
+                <div class="form-group"><label class="form-label">Typ zásahu</label><select id="s_typ" class="form-control"><option value="">— vyber —</option><option>Čistenie</option><option>Revízia</option><option>Oprava</option><option>Reklamácia</option><option>Iné</option></select></div>
+                <div class="form-group"><label class="form-label">Záruka?</label><select id="s_zaruka" class="form-control"><option value="">— vyber —</option><option>Áno</option><option>Nie</option></select></div>
+                <div class="form-group"><label class="form-label">Fakturované €</label><input type="number" id="s_fakt" class="form-control" placeholder="0" min="0" step="0.01" spellcheck="false"></div>
+                <div class="form-group"><label class="form-label">Náklad €</label><input type="number" id="s_naklad" class="form-control" placeholder="0" min="0" step="0.01" spellcheck="false"></div>
+                <div class="form-group"><label class="form-label">Čas (hod.)</label><input type="number" id="s_cas" class="form-control" placeholder="0" min="0" step="0.5" spellcheck="false"></div>
+                <div class="form-group"><label class="form-label">Marža € (auto)</label><div class="form-control font-mono fw-700 text-green" id="s_marza_calc" style="background:var(--sand-lt);display:flex;align-items:center;">0 €</div></div>
+                <div class="form-group d-none" id="s_obchod_group"><label class="form-label">Obchod (admin)</label><select id="s_obchod" class="form-control"><option value="">— vyber —</option><option>Obchod KE</option><option>Obchod SL</option><option>Obchod BA</option><option>Obchod CZ</option><option>V.O.</option></select></div>
+                <div class="form-group span-2"><label class="form-label">Poznámka</label><textarea id="s_poznamka" class="form-control" rows="2" placeholder="Voliteľná poznámka..." spellcheck="false"></textarea></div>
+            </div>
+            <div class="form-section media-section" id="servisFotkySection" style="display:none; margin-top:20px;">
+                <div class="form-section-title" style="display:flex;justify-content:space-between;align-items:center;">
+                    Fotogaléria <span class="media-tab-count" id="s_fotky_count" style="color:var(--muted2);font-weight:500"></span>
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <input type="file" id="s_fotky_upload" accept="image/*" multiple style="display:none;" onchange="handleFileUpload(this, State.editingServisId||State.newServisTemp, 'servis', 'fotky')">
+                        <button class="btn btn-secondary btn-sm" onclick="$('s_fotky_upload').click()">+ Pridať fotky</button>
+                    </div>
+                </div>
+                <div id="s_fotky_gallery" class="media-gallery" style="margin-top:10px"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="modalServis">Zrušiť</button>
+            <button class="btn btn-primary" id="btnSaveServis">Uložiť servis</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL IMPORT -->
+<div class="modal-overlay" id="modalImport">
+    <div class="modal" style="max-width:560px;width:100%">
+        <div class="modal-header">
+            <div class="modal-header-icon"></div>
+            <h3 id="modalImportTitle">Import z Excelu</h3>
+            <button class="modal-close" data-close="modalImport"></button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:12.5px;color:var(--muted);margin-bottom:18px;line-height:1.6">
+                Nahrajte <strong>.xlsx</strong> alebo <strong>.xls</strong> súbor.<br>
+                Stĺpce sa priradia automaticky podľa názvov. Zákazník je povinný stĺpec.
+            </p>
+
+            <!-- File input — viditeľný label obaľuje input, klik kdekoľvek otvára dialog -->
+            <label for="importFile" class="import-drop" id="importDrop"
+                   ondragover="event.preventDefault();this.classList.add('drag-over')"
+                   ondragleave="this.classList.remove('drag-over')"
+                   ondrop="event.preventDefault();this.classList.remove('drag-over');var f=event.dataTransfer.files[0];if(f)importProcessFile(f)">
+                <span class="import-drop-icon"></span>
+                <div class="import-drop-text">Kliknite sem alebo pretiahnite súbor</div>
+                <div class="import-drop-sub">.xlsx, .xls — max 10 MB</div>
+                <input type="file" id="importFile" name="importFile" accept=".xlsx,.xls"
+                       style="display:block;width:0.1px;height:0.1px;opacity:0;overflow:hidden;position:absolute;z-index:-1"
+                       onchange="importProcessFile(this.files[0])">
+            </label>
+
+            <div id="importPreview" style="margin-top:14px"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-close="modalImport">Zrušiť</button>
+            <button class="btn btn-success d-none" id="btnConfirmImport" onclick="confirmImport()">Importovať</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalResetPassword" class="modal-overlay" onclick="if(event.target===this)closePasswordModal()">
+    <div class="modal" style="max-width:420px">
+        <div class="modal-header">
+            <div class="modal-header-icon"></div>
+            <h3>Zmena hesla používateľa</h3>
+            <button class="modal-close" onclick="closePasswordModal()"></button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5">
+                Nastavujete nové heslo pre: <strong id="resetPasswordUsername" style="color:var(--ink)"></strong>
+            </p>
+            <div style="margin-bottom:16px">
+                <label class="form-label" style="display:block;margin-bottom:6px">Nové heslo</label>
+                <div style="position:relative">
+                    <input type="password" id="newResetPassword" class="input" placeholder="Minimálne 6 znakov"
+                           autocomplete="new-password" style="padding-right:42px;width:100%"
+                           onkeydown="if(event.key==='Enter')saveNewPassword()">
+                    <button type="button" onclick="togglePwVisibility('newResetPassword',this)" tabindex="-1"
+                            style="position:absolute;right:0;top:0;height:100%;width:40px;background:none;border:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;padding:0;transition:color .15s"
+                            onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'" title="Zobraziť/skryť heslo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="resetPasswordError" class="d-none" style="font-size:12px;color:var(--red);background:var(--red-lt);border-radius:var(--r-sm);padding:9px 12px;margin-bottom:12px"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closePasswordModal()">Zrušiť</button>
+            <button class="btn btn-primary" onclick="saveNewPassword()">Uložiť heslo</button>
+        </div>
+    </div>
+</div>
+
+<!-- lightboxOverlay odstránený – používa sa jednotný #lightbox systém vyššie -->
+
+<div class="notif" id="notif"><span class="notif-icon"></span><span id="notifText"></span></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettingsPanel()"></div>
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-panel-header">
+        <div class="settings-panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M20 12h2M2 12h2M19.07 19.07l-1.41-1.41M5.34 5.34 3.93 3.93M12 20v2M12 2v2"/></svg>
+            Nastavenia systému
+        </div>
+        <button class="settings-panel-close" onclick="closeSettingsPanel()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="settings-panel-body" id="settingsPanelBody">
+        <!-- Obsah sa generuje cez JS -->
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
