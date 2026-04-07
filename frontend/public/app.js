@@ -3410,7 +3410,7 @@ async function dlFile(url,filename){
     a.href=URL.createObjectURL(blob);a.download=filename;a.click();notify('Export dokončený');
   }catch(e){notify(e.message,'error');}finally{loading(false);}
 }
-td=()=>new Date().toISOString().slice(0,10);
+// td already defined above
 
 function openImport(type) {
   State.importType = type;
