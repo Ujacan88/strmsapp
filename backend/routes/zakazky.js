@@ -19,13 +19,19 @@ const CALC = r => {
 function genId(store) {
   const code = store.replace('Obchod ','').replace('V.O.','VO').replace(/\s/g,'');
   const year = new Date().getFullYear();
-  // Reset číslowania každý rok — počítame len zákazky z tohto roka
-  const cnt = queryCount(
-      'SELECT COUNT(*) as c FROM zakazky WHERE obchod=? AND created_at LIKE ?',
+  const prefix = `${code}-`;
+  // Pouzi MAX namiesto COUNT aby mazanie nezasposobovalo UNIQUE conflict
+  const { query } = require('../db');
+  const rows = query(
+      "SELECT id FROM zakazky WHERE obchod=? AND created_at LIKE ?",
       [store, `${year}-%`]
   );
-  // Formát: SL-001 (krátke, bez roka — pri novom roku začína od 001)
-  return `${code}-${String(cnt+1).padStart(3,'0')}`;
+  let max = 0;
+  for (const r of rows) {
+    const num = parseInt((r.id || '').replace(prefix, ''), 10);
+    if (!isNaN(num) && num > max) max = num;
+  }
+  return `${prefix}${String(max + 1).padStart(3,'0')}`;
 }
 
 function buildWhere(req) {

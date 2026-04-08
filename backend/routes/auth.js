@@ -1,24 +1,30 @@
 'use strict';
-const router  = require('express').Router();
-const bcrypt  = require('bcryptjs');
-const jwt     = require('jsonwebtoken');
+const router    = require('express').Router();
+const bcrypt    = require('bcryptjs');
+const jwt       = require('jsonwebtoken');
 const speakeasy = require('speakeasy');
-const qrcode  = require('qrcode');
+const qrcode    = require('qrcode');
 const { queryOne, run } = require('../db');
 const { authenticate, JWT_SECRET } = require('../middleware/auth');
 
 const TRUSTED_DEVICE_DAYS = 5;
 const TRUSTED_DEVICE_MS   = TRUSTED_DEVICE_DAYS * 24 * 60 * 60 * 1000;
 
+const cookieName = (userId) => `td_${userId}`;
+
 const SET_TRUSTED_DEVICE_COOKIE = (res, userId) => {
     const token = jwt.sign({ id: userId, trusted: true }, JWT_SECRET, { expiresIn: `${TRUSTED_DEVICE_DAYS}d` });
-    res.cookie('trusted_device', token, {
+    res.cookie(cookieName(userId), token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: false,  // HTTP server - secure:true funguje len na HTTPS
         maxAge: TRUSTED_DEVICE_MS,
         sameSite: 'lax',
         path: '/',
     });
+};
+
+const CLEAR_TRUSTED_DEVICE_COOKIE = (res, userId) => {
+    res.clearCookie(cookieName(userId), { path: '/' });
 };
 
 router.post('/login', async (req, res) => {
@@ -30,19 +36,18 @@ router.post('/login', async (req, res) => {
         return res.status(401).json({ error: 'Nesprávne meno alebo heslo' });
     }
 
-    if (req.cookies.trusted_device) {
+    const userCookie = req.cookies[cookieName(user.id)];
+    if (userCookie) {
         try {
-            const decoded = jwt.verify(req.cookies.trusted_device, JWT_SECRET);
-            if (decoded.id === user.id) {
-                // Cookie je platná — prihlásiť bez 2FA a obnoviť cookie na ďalších 5 dní
+            const decoded = jwt.verify(userCookie, JWT_SECRET);
+            if (decoded.id === user.id && decoded.trusted) {
                 SET_TRUSTED_DEVICE_COOKIE(res, user.id);
                 const payload = { id: user.id, username: user.username, role: user.role, store: user.store };
                 const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
                 return res.json({ complete: true, token, user: payload });
             }
         } catch (e) {
-            // Cookie vypršala alebo je neplatná — pokračuj na 2FA
-            res.clearCookie('trusted_device', { path: '/' });
+            CLEAR_TRUSTED_DEVICE_COOKIE(res, user.id);
         }
     }
 
@@ -51,7 +56,6 @@ router.post('/login', async (req, res) => {
     if (!user.mfa_enabled) {
         const secret = speakeasy.generateSecret({ name: `STORMS (${user.username})` });
         run('UPDATE users SET mfa_secret = ? WHERE id = ?', [secret.base32, user.id]);
-
         const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url);
         return res.json({ complete: false, requireSetup: true, tempToken, qrImage: qrCodeUrl });
     }

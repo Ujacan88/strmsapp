@@ -9,8 +9,15 @@ const CALC = r => r ? { ...r, marza: (r.fakturovane||0)-(r.naklad||0) } : r;
 
 function genId(store) {
   const code = store.replace('Obchod ','').replace('V.O.','VO').replace(/\s/g,'');
-  const cnt = queryCount('SELECT COUNT(*) as c FROM servis WHERE obchod=?',[store]);
-  return `S-${code}-${String(cnt+1).padStart(4,'0')}`;
+  const prefix = `S-${code}-`;
+  const { query } = require('../db');
+  const rows = query("SELECT id FROM servis WHERE obchod=?", [store]);
+  let max = 0;
+  for (const r of rows) {
+    const num = parseInt((r.id || '').replace(prefix, ''), 10);
+    if (!isNaN(num) && num > max) max = num;
+  }
+  return `${prefix}${String(max + 1).padStart(4,'0')}`;
 }
 
 function buildWhere(req) {
