@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2.7">
+    <link rel="stylesheet" href="styles.css?v=3.0">
     <script>
         // Okamžite aplikovať dark mode pred prvým renderom — zabráni blikaniu
         (function() {
@@ -53,8 +53,8 @@
             <div class="login-logo-sub" style="color: var(--muted); font-size: 15px; text-transform: uppercase; letter-spacing: 1px;">Obchodný systém</div>
         </div>
         <div class="form-group" style="text-align: left; margin-bottom: 16px;">
-            <label class="form-label" style="font-size: 12px; font-weight: bold; color: var(--muted);">Prihlasovacie meno</label>
-            <input type="text" id="loginUsername" class="form-control" placeholder="Napr. admin" autofocus autocomplete="username" spellcheck="false" autocorrect="off">
+            <label class="form-label" style="font-size: 12px; font-weight: bold; color: var(--muted);">Email</label>
+            <input type="text" id="loginUsername" class="form-control" placeholder="Napr. novak@storms.sk" autofocus autocomplete="username" spellcheck="false" autocorrect="off">
         </div>
         <div class="form-group" style="text-align: left; margin-bottom: 28px;">
             <label class="form-label" style="font-size: 12px; font-weight: bold; color: var(--muted);">Heslo</label>
@@ -409,7 +409,7 @@
                     <div class="form-group"><label class="form-label">Stav zákazky <span class="req">*</span></label><select id="z_stav" class="form-control"><option value="">— vyber —</option><option>Dopyt</option><option>Obhliadka</option><option>Ponuka</option><option>Objednané</option><option>Realizované</option><option>Storno</option></select></div>
                     <div class="form-group"><label class="form-label">Zdroj leadu</label><select id="z_zdroj" class="form-control"><option value="">— vyber —</option><option>Web</option><option>Showroom</option><option>Telefón</option><option>Odporúčanie</option><option>Developer</option><option>Reklama</option><option>Architekt</option></select></div>
                     <div class="form-group"><label class="form-label">Výsledok obhliadky</label><select id="z_vysledok" class="form-control"><option value="">— vyber —</option><option>ponuka</option><option>nezáujem</option><option>rieši konkurencia</option><option>odložené</option></select></div>
-                    <div class="form-group d-none" id="z_obchod_group"><label class="form-label">Obchod (admin)</label><select id="z_obchod" class="form-control"><option value="">— vyber —</option><option>Obchod KE</option><option>Obchod SL</option><option>Obchod BA</option><option>Obchod CZ</option><option>V.O.</option></select></div>
+                    <div class="form-group d-none" id="z_obchod_group"><label class="form-label">Obchod</label><select id="z_obchod" class="form-control"><option value="">— vyber —</option><option>Obchod KE</option><option>Obchod SL</option><option>Obchod BA</option><option>Obchod CZ</option><option>V.O.</option></select></div>
                 </div>
             </div>
             <div class="form-section">
@@ -486,7 +486,7 @@
                 <div class="form-group"><label class="form-label">Náklad €</label><input type="number" id="s_naklad" class="form-control" placeholder="0" min="0" step="0.01" spellcheck="false"></div>
                 <div class="form-group"><label class="form-label">Čas (hod.)</label><input type="number" id="s_cas" class="form-control" placeholder="0" min="0" step="0.5" spellcheck="false"></div>
                 <div class="form-group"><label class="form-label">Marža € (auto)</label><div class="form-control font-mono fw-700 text-green" id="s_marza_calc" style="background:var(--sand-lt);display:flex;align-items:center;">0 €</div></div>
-                <div class="form-group d-none" id="s_obchod_group"><label class="form-label">Obchod (admin)</label><select id="s_obchod" class="form-control"><option value="">— vyber —</option><option>Obchod KE</option><option>Obchod SL</option><option>Obchod BA</option><option>Obchod CZ</option><option>V.O.</option></select></div>
+                <div class="form-group d-none" id="s_obchod_group"><label class="form-label">Obchod</label><select id="s_obchod" class="form-control"><option value="">— vyber —</option><option>Obchod KE</option><option>Obchod SL</option><option>Obchod BA</option><option>Obchod CZ</option><option>V.O.</option></select></div>
                 <div class="form-group span-2"><label class="form-label">Poznámka</label><textarea id="s_poznamka" class="form-control" rows="2" placeholder="Voliteľná poznámka..." spellcheck="false"></textarea></div>
             </div>
             <div class="form-section media-section" id="servisFotkySection" style="display:none; margin-top:20px;">

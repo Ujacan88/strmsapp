@@ -101,6 +101,7 @@ const State = {
     filters:{ q:'', typ:'', zaruka:'', obchod:'', mesiac:'', rok:String(new Date().getFullYear()) } },
   editingZakazkaId:null, editingServisId:null,
   importType:null, importBuffer:null,
+  dashRok: String(new Date().getFullYear()), dashMesiac: '',
 };
 
 const $ = id => document.getElementById(id);
@@ -604,10 +605,17 @@ function initApp(){
 
   ['z_obchod_group','s_obchod_group'].forEach(id => {
     const el = $(id);
-    if (el) {
-      // Zobraz roletku "Obchod", ak je to admin/owner, ALEBO ak je to pobočka s viacerými pridelenými obchodmi
-      const canSelectStore = ['owner','admin'].includes(u.role) || (u.role === 'store' && u.store && u.store.includes(','));
-      el.classList.toggle('d-none', !canSelectStore);
+    if (!el) return;
+    const canSelectStore = ['owner','admin'].includes(u.role) || (u.role === 'store' && u.store && u.store.includes(','));
+    el.classList.toggle('d-none', !canSelectStore);
+    // Pobočka s viacerými obchodmi — naplň dropdown len jej obchodmi
+    if (u.role === 'store' && u.store && u.store.includes(',')) {
+      const selectEl = el.querySelector('select');
+      if (selectEl) {
+        const stores = u.store.split(',').map(s => s.trim());
+        selectEl.innerHTML = '<option value="">— vyber —</option>' +
+            stores.map(s => `<option value="${s}">${s}</option>`).join('');
+      }
     }
   });
 
@@ -752,7 +760,10 @@ async function renderDashboard(){
   const el=$('view-dashboard');
   el.innerHTML='<div style="padding:48px;text-align:center;color:var(--muted);font-size:13px">Načítavam...</div>';
   try{
-    const d=await api('GET','/api/dashboard');
+    const _dashQs = new URLSearchParams();
+    if (State.dashRok) _dashQs.set('rok', State.dashRok);
+    if (State.dashMesiac) _dashQs.set('mesiac', State.dashMesiac);
+    const d=await api('GET','/api/dashboard?' + _dashQs.toString());
     if(isPrivileged()) {
       renderPrivDashboard(el,d);
     } else {
@@ -1654,6 +1665,9 @@ $('btnSaveZakazka').addEventListener('click',async()=>{
   const zakaznik=$('z_zakaznik').value.trim(),stav=$('z_stav').value;
   if(!zakaznik){notify('Zadajte meno zákazníka','error');return;}
   if(!stav){notify('Vyberte stav zákazky','error');return;}
+  const _zObchod = $('z_obchod').value;
+  const _zObchodGroup = $('z_obchod_group');
+  if(_zObchodGroup && !_zObchodGroup.classList.contains('d-none') && !_zObchod){notify('Vyberte obchod','error');return;}
   const gv=id=>$(id).value,gn=id=>parseFloat($(id).value)||0;
   const body={zakaznik,stav,obchod:gv('z_obchod')||undefined,
     dopyt_d:gv('z_dopyt'),obhliadka_d:gv('z_obhliadka'),ponuka_d:gv('z_ponuka_d'),objednavka_d:gv('z_objednavka'),
@@ -1729,6 +1743,9 @@ $('btnSaveServis').addEventListener('click',async()=>{
   const zakaznik=$('s_zakaznik').value.trim(),datum=$('s_datum').value;
   if(!zakaznik){notify('Zadajte meno zákazníka','error');return;}
   if(!datum){notify('Zadajte dátum','error');return;}
+  const _sObchod = $('s_obchod').value;
+  const _sObchodGroup = $('s_obchod_group');
+  if(_sObchodGroup && !_sObchodGroup.classList.contains('d-none') && !_sObchod){notify('Vyberte obchod','error');return;}
   const body={datum,technik:$('s_technik').value,zakaznik,typ:$('s_typ').value,zaruka:$('s_zaruka').value,
     fakturovane:parseFloat($('s_fakt').value)||0,naklad:parseFloat($('s_naklad').value)||0,
     cas:parseFloat($('s_cas').value)||0,poznamka:$('s_poznamka').value,obchod:$('s_obchod').value||undefined};
@@ -4221,6 +4238,18 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSettingsPanel();
 });
 
+
+function dashRokOpts() {
+  const y = new Date().getFullYear();
+  return [y, y-1, y-2].map(yr =>
+      `<option value="${yr}" ${State.dashRok==yr?'selected':''}>${yr}</option>`).join('');
+}
+function dashMesiacOpts() {
+  return [['','Celý rok'],['1','Január'],['2','Február'],['3','Marec'],['4','Apríl'],
+    ['5','Máj'],['6','Jún'],['7','Júl'],['8','August'],['9','September'],
+    ['10','Október'],['11','November'],['12','December']]
+      .map(([v,l]) => `<option value="${v}" ${State.dashMesiac==v?'selected':''}>${l}</option>`).join('');
+}
 function renderSettingsPanel() {
   const body = document.getElementById('settingsPanelBody');
   if (!body) return;
@@ -4288,10 +4317,44 @@ function renderSettingsPanel() {
       </div>
     </div>
 
+    ${!isOwner ? `
+    <!-- FILTER DASHBOARDU POBOČKY -->
+    <div class="sp-section">
+      <div class="sp-section-title">Filter dashboardu</div>
+      <div class="sp-row">
+        <div class="sp-row-info">
+          <div class="sp-row-name">Rok</div>
+          <div class="sp-row-desc">Filtruj dashboard podľa roku</div>
+        </div>
+        <select class="filter-select filter-select-sm" onchange="State.dashRok=this.value;renderSettingsPanel();if(State.tab==='dashboard')renderDashboard()">${dashRokOpts()}</select>
+      </div>
+      <div class="sp-row">
+        <div class="sp-row-info">
+          <div class="sp-row-name">Mesiac</div>
+          <div class="sp-row-desc">Filtruj dashboard podľa mesiaca</div>
+        </div>
+        <select class="filter-select filter-select-sm" onchange="State.dashMesiac=this.value;renderSettingsPanel();if(State.tab==='dashboard')renderDashboard()">${dashMesiacOpts()}</select>
+      </div>
+    </div>` : ''}
+
     ${isOwner ? `
     <!-- DASHBOARD KONATEĽA -->
     <div class="sp-section">
       <div class="sp-section-title">Môj dashboard</div>
+      <div class="sp-row">
+        <div class="sp-row-info">
+          <div class="sp-row-name">Rok</div>
+          <div class="sp-row-desc">Filtruj dashboard podľa roku</div>
+        </div>
+        <select class="filter-select filter-select-sm" onchange="State.dashRok=this.value;renderSettingsPanel();if(State.tab==='dashboard')renderDashboard()">${dashRokOpts()}</select>
+      </div>
+      <div class="sp-row">
+        <div class="sp-row-info">
+          <div class="sp-row-name">Mesiac</div>
+          <div class="sp-row-desc">Filtruj dashboard podľa mesiaca</div>
+        </div>
+        <select class="filter-select filter-select-sm" onchange="State.dashMesiac=this.value;renderSettingsPanel();if(State.tab==='dashboard')renderDashboard()">${dashMesiacOpts()}</select>
+      </div>
       ${[
     { key:'z_kpi',       name:'KPI — Zákazky',         desc:'Hlavné KPI karty (zákazky, tržba, marža)' },
     { key:'s_kpi',       name:'KPI — Servis',          desc:'KPI karta pre servisné zásahy' },

@@ -17,7 +17,7 @@ function genId(store) {
     const num = parseInt((r.id || '').replace(prefix, ''), 10);
     if (!isNaN(num) && num > max) max = num;
   }
-  return `${prefix}${String(max + 1).padStart(4,'0')}`;
+  return `${prefix}${String(max + 1).padStart(3,'0')}`;
 }
 
 function buildWhere(req) {
@@ -73,7 +73,14 @@ router.post('/',(req,res)=>{
 
   let obchod = d.obchod;
   if (!obchod) {
-    obchod = ['admin','owner'].includes(req.user.role) ? 'Obchod KE' : (req.user.store ? req.user.store.split(',')[0] : 'Nezaradené');
+    if (['admin','owner'].includes(req.user.role)) {
+      return res.status(400).json({error:'Vyberte obchod'});
+    }
+    const stores = req.user.store ? req.user.store.split(',') : [];
+    if (stores.length > 1) {
+      return res.status(400).json({error:'Vyberte obchod'});
+    }
+    obchod = stores[0] || 'Nezaradené';
   }
 
   if (!canWrite(req,obchod)) return res.status(403).json({error:'Nemáte oprávnenie'});

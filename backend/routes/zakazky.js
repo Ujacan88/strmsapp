@@ -89,10 +89,16 @@ router.post('/',(req,res)=>{
   if (!d.zakaznik?.trim()) return res.status(400).json({error:'Zákazník je povinný'});
   if (!d.stav) return res.status(400).json({error:'Stav je povinný'});
 
-  // Ak niekto z výberu poslal obchod, použije sa ten. Inak zoberie prvý priradený obchod používateľa.
   let obchod = d.obchod;
   if (!obchod) {
-    obchod = ['admin','owner'].includes(req.user.role) ? 'Obchod KE' : (req.user.store ? req.user.store.split(',')[0] : 'Nezaradené');
+    if (['admin','owner'].includes(req.user.role)) {
+      return res.status(400).json({error:'Vyberte obchod'});
+    }
+    const stores = req.user.store ? req.user.store.split(',') : [];
+    if (stores.length > 1) {
+      return res.status(400).json({error:'Vyberte obchod'});
+    }
+    obchod = stores[0] || 'Nezaradené';
   }
 
   if (req.user.role==='store' && !canWrite(req, obchod)) return res.status(403).json({error:'Nemáte oprávnenie pre tento obchod'});
